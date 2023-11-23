@@ -1,5 +1,10 @@
-birth_certificate id
-id passport
-passport verification
-verification confirmation_ticket
-confirmation_ticket pass
+visa foreignpassport
+visa hotel
+visa bankstatement
+bankstatement nationalpassport
+hotel creditcard
+creditcard nationalpassport
+nationalpassport birthcertificate
+foreignpassport nationalpassport
+foreignpassport militarycertificate
+militarycertificate nationalpassport

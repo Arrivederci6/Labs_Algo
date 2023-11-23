@@ -2,8 +2,8 @@
 Module - govern.py
 This module contains a functions to make a topological sort.
 """
-
-from collections import defaultdict, deque
+from bisect import bisect_left
+from collections import defaultdict
 import os
 
 def topological_sort(graph):
@@ -19,27 +19,28 @@ def topological_sort(graph):
     Exception:
         - ValueError: If the graph contains a loop or some nodes are not connected to the rest of the graph.
     """
-    indegree = defaultdict(int)
+    edges = defaultdict(int)
+
     for node in graph:
         for neighbor in graph[node]:
-            indegree[neighbor] += 1
+            edges[neighbor] += 1
 
-    queue = deque([node for node in graph if indegree[node] == 0])
+    queue = sorted([node for node in graph if edges[node] == 0])
     result = []
 
     while queue:
-        current_node = queue.popleft()
+        current_node = queue.pop(0)
 
         for neighbor in graph[current_node]:
-            indegree[neighbor] -= 1
-            if indegree[neighbor] == 0:
-                queue.append(neighbor)
+            edges[neighbor] -= 1
+            if edges[neighbor] == 0:
+                queue.insert(bisect_left(queue, neighbor), neighbor)
 
         result.append(current_node)
 
     if len(result) != len(graph):
         raise ValueError("Graph contains a cycle or some nodes are not connected to the rest of the graph.")
-    return result[::-1]
+    return result
 
 def read_input(file_path):
     """
